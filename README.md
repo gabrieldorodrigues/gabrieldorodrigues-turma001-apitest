@@ -1,108 +1,85 @@
-# Análise Estatística de Dados - Testes Unitários Jest
+# 🧪 Testes de Integração - API Authors (FakeRestAPI)
 
-[![Build and Tests](https://github.com/ugioni/unit-tests-jest/actions/workflows/node.js.yml/badge.svg?branch=master)](https://github.com/ugioni/unit-tests-jest/actions/workflows/node.js.yml)
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=ugioni_unit-tests-jest&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=ugioni_unit-tests-jest)
-[![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](https://choosealicense.com/licenses/mit/)
+[![Node.js Version](https://img.shields.io/badge/node-%3E%3D20-brightgreen)](https://nodejs.org/)
+[![Testes](https://img.shields.io/badge/testes-Jest%20%2B%20PactumJS-blue)](https://jestjs.io/)
+[![Code Quality](https://img.shields.io/badge/qualidade-SonarQube-orange)](https://www.sonarqube.org/)
 
-Pacote JavaScript para análise estatística de dados com suite completa de testes unitários implementando as melhores práticas de CI/CD.
+Repositório de testes de integração para validar o funcionamento dos endpoints da entidade **Authors** da API FakeRestAPI. Desenvolvido com foco em confiabilidade e boas práticas de automação.
 
-## Funcionalidades Principais
+## 📌 Tabela de Conteúdos
+- [Ferramentas Utilizadas](#-ferramentas-utilizadas)
+- [Endpoints Testados](#-endpoints-testados)
+- [Pré-requisitos](#-pré-requisitos)
+- [Configuração do Projeto](#-configuração-do-projeto)
+- [Execução dos Testes](#-execução-dos-testes)
+- [Padrões de Código](#-padrões-de-código)
+- [Qualidade do Código](#-qualidade-do-código)
+- [Links Úteis](#-links-úteis)
 
-- Cálculos estatísticos completos:
-  - Medidas de tendência central (Média, Mediana, Moda)
-  - Medidas de dispersão (Variância, Desvio Padrão, Amplitude)
-  - Normalização de dados
-  - Cálculo de percentis
-  - Detecção de outliers
-  - Análise de correlação
+## 🛠 Ferramentas Utilizadas
+- **Jest**: Framework de testes com suporte a paralelização e relatórios
+- **PactumJS**: Biblioteca para validação precisa de respostas HTTP
+- **SonarQube**: Análise estática contínua para métricas de qualidade
 
-- Gestão de dados:
-  - Adição e limpeza de datasets
-  - Ordenação não-destrutiva
-  - Métodos de pré-processamento
+## 📋 Endpoints Testados
+Endpoint | Método | Descrição | Cobertura
+---------|--------|-----------|----------
+`/api/v1/Authors` | GET | Listar todos autores | Valida status, schema e headers
+`/api/v1/Authors` | POST | Criar novo autor | Testes de contrato e validações
+`/api/v1/Authors/{id}` | GET | Buscar autor por ID | Casos válidos e inválidos
+`/api/v1/Authors/{id}` | PUT | Atualizar autor | Verificação de idempotência
+`/api/v1/Authors/{id}` | DELETE | Excluir autor | Valida exclusão e id inexistente
+`/api/v1/Authors/authors/books/{idBook}` | GET | Autores por livro | Paginação e relacionamentos
 
-## Pré-requisitos
+## ⚙️ Pré-requisitos
+- Node.js 20.x+
+- npm 9.x+
+- Acesso à internet (para chamadas à API)
 
-- Node.js (versão >= 20.x)
-- npm (versão >= 9.x)
-
-## Instalação
-
+## 🚀 Configuração do Projeto
 ```bash
-git clone https://github.com/ugioni/unit-tests-jest.git
-cd unit-tests-jest
-npm install
+# Clonar repositório
+git clone https://github.com/gabrieldorodrigues/GabrielRodrigues-Turma001-UnitTest
+cd GabrielRodrigues-Turma001-UnitTest
+
+# Instalar dependências
+npm install --omit=dev
 ```
 
-## Uso Básico
+## 🧪 Execução dos Testes
+Comando | Descrição
+--------|----------
+`npm test` | Executa todos os testes em paralelo
+`npm run test:watch` | Modo watch para desenvolvimento
+`npm run test:coverage` | Gera relatório de cobertura
+`npm run ci` | Fluxo completo (lint + format + testes)
 
-```javascript
-const AnaliseDeDados = require('./src/analiseDeDados');
+**Saídas:**
+- Relatórios no formato JUnit em `./output/reports`
+- Cobertura de testes em `./output/coverage`
 
-const analise = new AnaliseDeDados([1, 2, 3, 4, 5]);
-console.log(analise.calcularMedia()); // 3
-console.log(analise.calcularMediana()); // 3
-```
-
-## Testes e Cobertura
-
-Executar todos os testes:
+## 📏 Padrões de Código
 ```bash
-npm test
+# Formatação automática
+npm run format
+
+# Verificação de padrões
+npm run lint
+
+# Corrigir problemas automaticamente
+npm run lint:fix
 ```
 
-Executar testes com relatório de cobertura:
-```bash
-npm run coverage
-```
+## 🔍 Qualidade do Código
+O projeto integra-se ao SonarQube para análise contínua:
+- Detecção de vulnerabilidades
+- Cobertura de testes
+- Complexidade ciclomática
+- Duplicação de código
 
-Relatório de cobertura gerado em:
-```bash
-./coverage/lcov-report/index.html
-```
+Configuração no arquivo `sonar-project.properties`.
 
-## Estratégia de Testes
-
-Cobertura abrangente incluindo:
-- Validação de entradas e casos extremos
-- Cenários de dados vazios/nulos
-- Precisão numérica em cálculos estatísticos
-- Comportamento de métodos com diferentes tamanhos de datasets
-- Testes de não-regressão para métricas-chave
-
-**Cobertura Atual:**  
-![Coverage](https://img.shields.io/badge/Coverage-95%25-brightgreen)
-
-## Estrutura do Projeto
-
-```
-.
-├── src/
-│   └── analiseDeDados.js    # Implementação principal
-├── test/
-│   └── analiseDeDados.test.js # Testes unitários
-├── coverage/                # Relatórios de cobertura
-├── .github/
-│   └── workflows/           # Configurações de CI/CD
-└── package.json             # Dependências e scripts
-```
-
-## CI/CD Pipeline
-
-Fluxo automatizado com:
-- Execução de testes em Node.js 20.x
-- Análise estática com SonarCloud
-- Geração de relatórios de cobertura
-- Verificação de qualidade de código
-
-## Contribuição
-
-1. Faça o fork do projeto
-2. Crie sua feature branch (`git checkout -b feature/nova-feature`)
-3. Commit suas mudanças (`git commit -m 'Adiciona nova feature'`)
-4. Push para a branch (`git push origin feature/nova-feature`)
-5. Abra um Pull Request
-
-## Licença
-
-Distribuído sob licença MIT. Veja [LICENSE](LICENSE) para mais informações.
+## 🔗 Links Úteis
+- [Fakerestapi Swagger](https://fakerestapi.azurewebsites.net/index.html)
+- [PactumJS Docs](https://pactumjs.github.io/)
+- [Jest Docs](https://jestjs.io/docs/getting-started)
