@@ -15,7 +15,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4.1.1
       - name: Use Node.js 21
-        uses: actions/setup-node@v4.0.0
+        uses: actions/setup-node@v4.4.0
         with:
           node-version: 21
           cache: 'npm'
@@ -30,7 +30,7 @@ jobs:
         with:
           fetch-depth: 0
       - name: Setup Node.js environment
-        uses: actions/setup-node@v4.0.0
+        uses: actions/setup-node@v4.4.0
         with:
           node-version: 21
       - name: SonarCloud Scan
